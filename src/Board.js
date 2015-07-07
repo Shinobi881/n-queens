@@ -100,10 +100,10 @@
       //create a var to store hasRowConflictAt fxn result initialize it to false and return this var
       //pass in hasRowConflictAt the nth property of this.attributes
       for(var i = 0; i < (dimension); i++){
-            hasConflict = this.hasRowConflictAt(i);
-            if(hasConflict){
-              return true;
-            }
+        hasConflict = this.hasRowConflictAt(i);
+        if(hasConflict){
+          return true;
+        }
       }
 
 
@@ -117,7 +117,19 @@
     //
     // test if a specific column on this board contains a conflict
     hasColConflictAt: function(colIndex) {
-      return false; // fixme
+      var hasConflict = false;
+      var columnSum = 0;
+      var dimension = this.attributes.n;
+
+      for(var i = 0; i < dimension; i++){
+        columnSum += this.attributes[i][colIndex];
+      }
+
+      if(columnSum > 1){
+        hasConflict = true;
+      }
+
+      return hasConflict;
     },
 
     // test if any columns on this board contain conflicts
