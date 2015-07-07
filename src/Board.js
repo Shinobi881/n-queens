@@ -178,8 +178,8 @@
         if(this.attributes[row + i] === undefined){
           return hasConflict;
         }
-        console.log('this.attributes[row + i][col + i]', this.attributes[row + i][col + i]);
-        console.log('this.attributes[row + i]', this.attributes[row + i]);
+        // console.log('this.attributes[row + i][col + i]', this.attributes[row + i][col + i]);
+        // console.log('this.attributes[row + i]', this.attributes[row + i]);
 
         sum += this.attributes[row + i][col + i];
 
@@ -220,12 +220,66 @@
     //
     // test if a specific minor diagonal on this board contains a conflict
     hasMinorDiagonalConflictAt: function(minorDiagonalColumnIndexAtFirstRow) {
+      var hasConflict = false;
+      var dimension = this.attributes.n;
+      var sum = 0;
+      // Setting the row equal to the input at column 3
+      var col = minorDiagonalColumnIndexAtFirstRow;
+      var row = 0;
       
-      return false; // fixme
+     // debugger;
+      console.log('Minor', minorDiagonalColumnIndexAtFirstRow);
+      
+      // Check if the row is less than 0 or off the board
+      if(col > 3 ) {
+        //console.log('Row, col before calcs', row, col);
+        
+        // If yes, set row to 0
+        row = col - 3;
+
+        // Calculate the correct column
+        col = 3;
+        
+        
+        //console.log('Row, col after calcs', row, col);
+      }
+
+
+      for(var i = 0; i < dimension; i++){
+        var incrementedRow = row + i;
+        var decrementedCol = col - i;
+
+
+        if(this.attributes[incrementedRow] === undefined || this.attributes[incrementedRow][col - 1] === undefined){
+          return hasConflict;
+        }
+        // console.log('this.attributes[incrementedRow][col - i]', this.attributes[incrementedRow][decrementedCol]);
+        // console.log('this.attributes[incrementedRow]', this.attributes[incrementedRow]);
+        // console.log('Column', col);
+        
+        // Sum the coordinates along the minor diagonal 
+        sum += this.attributes[incrementedRow][decrementedCol];
+        //console.log('Logging sum', sum);
+
+        // If the sum is greater than 1, there is a conflict
+        if(sum > 1){
+          hasConflict = true;
+        }
+
+        // If the row or column are off the board return conflict value
+        if(incrementedRow > dimension - 1 || decrementedCol < 0){
+          return hasConflict;
+        }
+
+      }
+
+      return hasConflict; 
+      
     },
 
     // test if any minor diagonals on this board contain conflicts
     hasAnyMinorDiagonalConflicts: function() {
+      this.hasMinorDiagonalConflictAt(5);
       return false; // fixme
     }
 
