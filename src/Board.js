@@ -137,9 +137,18 @@
 
     // test if any columns on this board contain conflicts
     hasAnyColConflicts: function() {
+      var hasConflict = false;
+      var dimension = this.attributes.n;
+
+      for(var i = 0; i < dimension; i++){
+        hasConflict = this.hasColConflictAt(i);
+        if(hasConflict){
+          return true;
+        }
+      }
 
 
-      return false; // fixme
+      return hasConflict;
     },
 
 
@@ -149,7 +158,42 @@
     //
     // test if a specific major diagonal on this board contains a conflict
     hasMajorDiagonalConflictAt: function(majorDiagonalColumnIndexAtFirstRow) {
-      return false; // fixme
+      // console.log('asklfghkhf', majorDiagonalColumnIndexAtFirstRow);
+      // console.log('this.attributes[majorDiagonalColumnIndexAtFirstRow]', this.attributes[majorDiagonalColumnIndexAtFirstRow]);
+      // console.log('this.attributes[0][majorDiagonalColumnIndexAtFirstRow]', this.attributes[0][majorDiagonalColumnIndexAtFirstRow]);
+
+      var hasConflict = false;
+      var dimension = this.attributes.n;
+      var sum = 0;
+      var row = 0;
+      var col = majorDiagonalColumnIndexAtFirstRow;
+
+      if(col < 0){
+        row = col * (-1);
+        col = 0;
+      }
+
+
+      for(var i = 0; i < dimension; i++){
+        if(this.attributes[row + i] === undefined){
+          return hasConflict;
+        }
+        console.log('this.attributes[row + i][col + i]', this.attributes[row + i][col + i]);
+        console.log('this.attributes[row + i]', this.attributes[row + i]);
+
+        sum += this.attributes[row + i][col + i];
+
+        if(sum > 1){
+          hasConflict = true;
+        }
+
+        if(row + i > dimension - 1 || col + i > dimension - 1){
+          return hasConflict;
+        }
+
+      }
+
+      return hasConflict; 
     },
 
     // test if any major diagonals on this board contain conflicts
@@ -164,6 +208,7 @@
     //
     // test if a specific minor diagonal on this board contains a conflict
     hasMinorDiagonalConflictAt: function(minorDiagonalColumnIndexAtFirstRow) {
+      
       return false; // fixme
     },
 
