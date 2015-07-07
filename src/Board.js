@@ -278,8 +278,18 @@
 
     // test if any minor diagonals on this board contain conflicts
     hasAnyMinorDiagonalConflicts: function() {
-      this.hasMinorDiagonalConflictAt(5);
-      return false; // fixme
+      // this.hasMinorDiagonalConflictAt(5);
+      var hasConflict = false;
+      var dimension = this.attributes.n;
+
+      for(var i = 0; i < ((dimension-1)*2); i++){
+        hasConflict = this.hasMinorDiagonalConflictAt(i);
+        if(hasConflict){
+          return true;
+        }
+      }
+
+      return hasConflict;
     }
 
     /*--------------------  End of Helper Functions  ---------------------*/
