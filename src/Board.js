@@ -228,17 +228,16 @@
       var row = 0;
       
      // debugger;
-      console.log('Minor', minorDiagonalColumnIndexAtFirstRow);
-      
+     
       // Check if the row is less than 0 or off the board
-      if(col > 3 ) {
+      if(col > (dimension - 1) ) {
         //console.log('Row, col before calcs', row, col);
         
         // If yes, set row to 0
-        row = col - 3;
+        row = col - (dimension - 1);
 
         // Calculate the correct column
-        col = 3;
+        col = (dimension - 1);
         
         
         //console.log('Row, col after calcs', row, col);
