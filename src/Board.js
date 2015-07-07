@@ -79,12 +79,35 @@
     //
     // test if a specific row on this board contains a conflict
     hasRowConflictAt: function(rowIndex) {
-      return false; // fixme
+      var hasConflict = false;
+      var rowSum = null;
+
+      _.each(this.get(rowIndex), function(val){
+        rowSum += val;
+      });
+
+      if(rowSum > 1){
+        hasConflict = true;
+      }
+
+      return hasConflict;
     },
 
     // test if any rows on this board contain conflicts
     hasAnyRowConflicts: function() {
-      return false; // fixme
+      var hasConflict = false;
+      var dimension = this.attributes.n;
+      //create a var to store hasRowConflictAt fxn result initialize it to false and return this var
+      //pass in hasRowConflictAt the nth property of this.attributes
+      for(var i = 0; i < (dimension); i++){
+            hasConflict = this.hasRowConflictAt(i);
+            if(hasConflict){
+              return true;
+            }
+      }
+
+
+      return hasConflict;
     },
 
 
