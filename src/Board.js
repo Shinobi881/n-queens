@@ -198,7 +198,19 @@
 
     // test if any major diagonals on this board contain conflicts
     hasAnyMajorDiagonalConflicts: function() {
-      return false; // fixme
+      var hasConflict = false;
+      var dimension = this.attributes.n;
+
+      for(var i = -2; i < dimension; i++){
+        hasConflict = this.hasMajorDiagonalConflictAt(i);
+        if(hasConflict){
+          return true;
+        }
+      }
+
+
+      return hasConflict;
+
     },
 
 
