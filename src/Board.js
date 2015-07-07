@@ -122,7 +122,10 @@
       var dimension = this.attributes.n;
 
       for(var i = 0; i < dimension; i++){
+        //console.log('this.attributes[i]', this.attributes[i]);
+       // console.log('this.attributes[i][colIndex]', this.attributes[i][colIndex]);
         columnSum += this.attributes[i][colIndex];
+        //console.log('columnSum ', columnSum);
       }
 
       if(columnSum > 1){
@@ -134,6 +137,8 @@
 
     // test if any columns on this board contain conflicts
     hasAnyColConflicts: function() {
+
+
       return false; // fixme
     },
 
