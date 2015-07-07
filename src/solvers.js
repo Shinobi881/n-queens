@@ -14,9 +14,10 @@
 // return a matrix (an array of arrays) representing a single nxn chessboard, with n rooks placed such that none of them can attack each other
 
 window.findNRooksSolution = function(n) {
-  var solution = undefined; //fixme
+  var solution = undefined;
 
-  console.log('Single solution for ' + n + ' rooks:', JSON.stringify(solution));
+
+  // console.log('Single solution for ' + n + ' rooks:', JSON.stringify(solution));
   return solution;
 };
 
@@ -24,7 +25,83 @@ window.findNRooksSolution = function(n) {
 
 // return the number of nxn chessboards that exist, with n rooks placed such that none of them can attack each other
 window.countNRooksSolutions = function(n) {
-  var solutionCount = undefined; //fixme
+  var solutionCount = 0;
+  var board = new Board({n:n});
+
+  var hasConflict = false;
+  var row = 0;
+  var col = 0;
+  var recurseFxn = null;
+
+  console.log('board', board);
+
+if(n > 0){
+  recurseFxn = function(row, col){
+    //initialize board with piece in the top left corner 
+    // console.log('board[row][col]', board.attributes[row][col]);
+    // console.log('board[row]', board.attributes[row]);
+    board.attributes[row][col] = 1;
+
+    //check for conflict
+    hasConflict = board.hasAnyRooksConflicts();
+
+    if(hasConflict){
+      console.log('conflicts!!!');
+    } else{
+      console.log('NOOOOO conflicts!!!');
+      console.log('solutionCount is ', solutionCount); 
+      solutionCount++;
+    }
+  }(row, col);
+}
+
+  // recurseFxn = function(row, col){
+  //   //initialize board with piece in the top left corner 
+  //   board[row][col] = 1;
+
+  //   //increment row, add a piece
+  //   row++;
+      
+  //   //check for conflict
+  //   hasConflict = board.hasAnyRooksConflicts;
+
+  //   //if there is a conflict, 
+  //   if(hasConflict){
+  //     //if the piece is in the last column
+  //     if(col === n-1){
+  //       //INCLUDE BACKTRACKING HERE
+  //       console.log('we need to add backtracking here');
+  //     };
+  //     //remove the piece, 
+  //     board[row][col] = 0; 
+  //     //increment column of current piece
+  //     col++;
+  //     board[row][col] = 1; 
+  //   } 
+  //   // if there is no conflict
+  //   else {
+  //     if(row === n-1){
+  //       //this is a solution
+  //       solutionCount++;        
+  //       //INCLUDE BACKTRACKING HERE
+  //       console.log('we need to add backtracking here');
+  //     }
+  //     //go to next row
+  //     row++;
+  //     //start at the initial col
+  //     col = 0;
+  //     //recurse
+  //     recurseFxn(row, col)
+  //   }
+  // }(row, col);
+
+
+
+
+
+
+
+
 
   console.log('Number of solutions for ' + n + ' rooks:', solutionCount);
   return solutionCount;
@@ -36,7 +113,7 @@ window.countNRooksSolutions = function(n) {
 window.findNQueensSolution = function(n) {
   var solution = undefined; //fixme
 
-  console.log('Single solution for ' + n + ' queens:', JSON.stringify(solution));
+  // console.log('Single solution for ' + n + ' queens:', JSON.stringify(solution));
   return solution;
 };
 
@@ -45,6 +122,6 @@ window.findNQueensSolution = function(n) {
 window.countNQueensSolutions = function(n) {
   var solutionCount = undefined; //fixme
 
-  console.log('Number of solutions for ' + n + ' queens:', solutionCount);
+  // console.log('Number of solutions for ' + n + ' queens:', solutionCount);
   return solutionCount;
 };
