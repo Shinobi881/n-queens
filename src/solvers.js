@@ -28,98 +28,39 @@ window.countNRooksSolutions = function(n) {
   var solutionCount = 0;
   var board = new Board({n:n});
 
-  var hasConflict = false;
-  var row = 0;
-  var col = 0;
-  
+ 
+var recurseFxn = function(row){
 
-  // console.log('board', board);
-
-  if(n > 0){
-    var recurseFxn = function(row, col){
-      //initialize board with piece in the top left corner 
-      // console.log('board[row][col]', board.attributes[row][col]);
-      // console.log('board[row]', board.attributes[row]);
-      board.attributes[row][col] = 1;
-
-      //check for conflict
-      hasConflict = board.hasAnyRooksConflicts();
-
-      if(hasConflict){
-        console.log('conflicts!!!');
-        // if the piece is in the last column
-        if(col === n-1){
-          //INCLUDE BACKTRACKING HERE
-          console.log('we need to add backtracking here');
-        };
-        //remove the piece, 
-        board.attributes[row][col] = 0; 
-        //increment column of current piece
-        col++;
-        board.attributes[row][col] = 1;
-        //recurse
-        recurseFxn(row, col); 
-      } else {
-        console.log('NOOOOO conflicts!!!');
-        console.log('solutionCount is ', solutionCount);
-        if(row === n-1){
-          //this is a solution
-          solutionCount++;        
-          //INCLUDE BACKTRACKING HERE
-          console.log('we need to add backtracking here');
-        } else {
-        //go to next row
-          row++;
-          //start at the initial col
-          col = 0;
-          //recurse
-          recurseFxn(row, col); 
-          solutionCount++;
-        }  
-      }
-    }
-    recurseFxn(row, col);
+ // When all rows are exhausted, we will stop the function
+  if(row === n){
+    // increment the solution count
+    solutionCount++;
+    // Stop
+    return;
   }
 
-  // recurseFxn = function(row, col){
-  //   //initialize board with piece in the top left corner 
-  //   board[row][col] = 1;
+ // if all the rows are exhausted
+  
 
-  //   //increment row, add a piece
-  //   row++;
-      
-  //   //check for conflict
-  //   hasConflict = board.hasAnyRooksConflicts;
 
-  //   //if there is a conflict, 
-  //   if(hasConflict){
-  //     //if the piece is in the last column
-  //     if(col === n-1){
-  //       //INCLUDE BACKTRACKING HERE
-  //       console.log('we need to add backtracking here');
-  //     };
-  //     //remove the piece, 
-  //     board[row][col] = 0; 
-  //     //increment column of current piece
-  //     col++;
-  //     board[row][col] = 1; 
-  //   } 
-  //   // if there is no conflict
-  //   else {
-  //     if(row === n-1){
-  //       //this is a solution
-  //       solutionCount++;        
-  //       //INCLUDE BACKTRACKING HERE
-  //       console.log('we need to add backtracking here');
-  //     }
-  //     //go to next row
-  //     row++;
-  //     //start at the initial col
-  //     col = 0;
-  //     //recurse
-  //     recurseFxn(row, col)
-  //   }
-  // }(row, col);
+  // Iterate over all possible decisions
+  for(var i = 0; i < n; i++){
+    // Place a piece
+    board.togglePiece(row, i);
+    // recurse into the remaining problem
+    if(!board.hasAnyRooksConflicts()){
+      recurseFxn(row + 1);
+    // un-place piece
+    }
+    board.togglePiece(row, i);
+  }
+
+
+    
+
+}
+
+recurseFxn(0);
 
 
 
@@ -146,7 +87,44 @@ window.findNQueensSolution = function(n) {
 
 // return the number of nxn chessboards that exist, with n queens placed such that none of them can attack each other
 window.countNQueensSolutions = function(n) {
-  var solutionCount = undefined; //fixme
+  
+  var solutionCount = 0;
+  var board = new Board({n:n});
+
+
+  var recurseFxn = function(row){
+
+ // When all rows are exhausted, we will stop the function
+ if(row === n){
+    // increment the solution count
+    solutionCount++;
+    // Stop
+    return;
+  }
+
+ // if all the rows are exhausted
+
+
+
+  // Iterate over all possible decisions
+  for(var i = 0; i < n; i++){
+    // Place a piece
+    board.togglePiece(row, i);
+    // recurse into the remaining problem
+    if(!board.hasAnyQueensConflicts()){
+      recurseFxn(row + 1);
+    // un-place piece
+  }
+  board.togglePiece(row, i);
+}
+
+
+
+
+}
+
+recurseFxn(0);
+
 
   // console.log('Number of solutions for ' + n + ' queens:', solutionCount);
   return solutionCount;
