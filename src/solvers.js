@@ -31,29 +31,55 @@ window.countNRooksSolutions = function(n) {
   var hasConflict = false;
   var row = 0;
   var col = 0;
-  var recurseFxn = null;
+  
 
-  console.log('board', board);
+  // console.log('board', board);
 
-if(n > 0){
-  recurseFxn = function(row, col){
-    //initialize board with piece in the top left corner 
-    // console.log('board[row][col]', board.attributes[row][col]);
-    // console.log('board[row]', board.attributes[row]);
-    board.attributes[row][col] = 1;
+  if(n > 0){
+    var recurseFxn = function(row, col){
+      //initialize board with piece in the top left corner 
+      // console.log('board[row][col]', board.attributes[row][col]);
+      // console.log('board[row]', board.attributes[row]);
+      board.attributes[row][col] = 1;
 
-    //check for conflict
-    hasConflict = board.hasAnyRooksConflicts();
+      //check for conflict
+      hasConflict = board.hasAnyRooksConflicts();
 
-    if(hasConflict){
-      console.log('conflicts!!!');
-    } else{
-      console.log('NOOOOO conflicts!!!');
-      console.log('solutionCount is ', solutionCount); 
-      solutionCount++;
+      if(hasConflict){
+        console.log('conflicts!!!');
+        // if the piece is in the last column
+        if(col === n-1){
+          //INCLUDE BACKTRACKING HERE
+          console.log('we need to add backtracking here');
+        };
+        //remove the piece, 
+        board.attributes[row][col] = 0; 
+        //increment column of current piece
+        col++;
+        board.attributes[row][col] = 1;
+        //recurse
+        recurseFxn(row, col); 
+      } else {
+        console.log('NOOOOO conflicts!!!');
+        console.log('solutionCount is ', solutionCount);
+        if(row === n-1){
+          //this is a solution
+          solutionCount++;        
+          //INCLUDE BACKTRACKING HERE
+          console.log('we need to add backtracking here');
+        } else {
+        //go to next row
+          row++;
+          //start at the initial col
+          col = 0;
+          //recurse
+          recurseFxn(row, col); 
+          solutionCount++;
+        }  
+      }
     }
-  }(row, col);
-}
+    recurseFxn(row, col);
+  }
 
   // recurseFxn = function(row, col){
   //   //initialize board with piece in the top left corner 
